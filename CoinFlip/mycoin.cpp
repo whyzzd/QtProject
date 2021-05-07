@@ -31,7 +31,7 @@ MyCoin::MyCoin(QString btnImg)
 
     //监听计时器，以改变硬币
     connect(timer1,&QTimer::timeout,[=](){
-        QString str1=QString(":/Image/Coin000%1.jpg").arg(this->m_Min++);
+        QString str1=QString(":/Image/Coin000%1.png").arg(this->m_Min++);
         QPixmap pix(str1);
         this->setIcon(pix);
         if(this->m_Min>8)
@@ -44,7 +44,7 @@ MyCoin::MyCoin(QString btnImg)
     });
 
     connect(timer2,&QTimer::timeout,[=](){
-        QString str1=QString(":/Image/Coin000%1.jpg").arg(this->m_Max--);
+        QString str1=QString(":/Image/Coin000%1.png").arg(this->m_Max--);
         QPixmap pix(str1);
         this->setIcon(pix);
         if(this->m_Max<1)

@@ -20,7 +20,7 @@ PlayScene::PlayScene(int levelNum)
     setFixedSize(320,600);
 
     //设置图标
-    this->setWindowIcon(QPixmap(":/Image/Coin0001.ico"));
+    this->setWindowIcon(QPixmap(":/Image/CoinIco.png"));
 
     //设置标题
     this->setWindowTitle("选择关卡场景");
@@ -40,7 +40,7 @@ PlayScene::PlayScene(int levelNum)
     qDebug()<<str;
 
     //返回按钮设置
-    MyPushButton *mybtn=new MyPushButton(":/Image/BackButton.jpg",":/Image/BackButtonSelected.jpg");
+    MyPushButton *mybtn=new MyPushButton(":/Image/BackButton.png",":/Image/BackButtonSelected.png");
     mybtn->setParent(this);
     mybtn->setMysize(50,50);
     mybtn->move(this->width()-65,this->height()-65);
@@ -59,7 +59,7 @@ PlayScene::PlayScene(int levelNum)
     QLabel *label = new QLabel;
     label->setParent(this);
     //设置位置，宽高
-    label->setGeometry(30,this->height()-50,120,50);
+    label->setGeometry(80,this->height()-70,120,50);
     //设置字体
     QFont font;
     font.setFamily("华文新魏");
@@ -107,11 +107,11 @@ PlayScene::PlayScene(int levelNum)
              QString str0="";
             if(gameArr[i][j]==1)
             {
-                str0=":/Image/Coin0001.jpg";
+                str0=":/Image/Coin0001.png";
             }
             else
             {
-                str0=":/Image/Coin0008.jpg";
+                str0=":/Image/Coin0008.png";
             }
             MyCoin *myc=new MyCoin(str0);
             myc->setParent(this);
@@ -228,11 +228,11 @@ void PlayScene::paintEvent(QPaintEvent *)
 {
     //加载背景图片
     QPainter painter(this);
-    QPixmap pix(":/Image/PlayLevelScene.jpg");
+    QPixmap pix(":/Image/PlayLevelScene.png");
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
 
     //放上标题
     pix.load(":/Image/Title.png");
-    pix=pix.scaled(pix.width()*0.5,pix.height()*0.5);
-    painter.drawPixmap(10,30,pix);
+    pix=pix.scaled(pix.width()*0.1,pix.height()*0.1);
+    painter.drawPixmap(10,15,pix);
 }

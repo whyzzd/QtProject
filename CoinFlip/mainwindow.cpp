@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(320,600);
 
     //设置图标
-    QIcon icon(":/Image/Coin0001.ico");
+    QIcon icon(":/Image/CoinIco.png");
     this->setWindowIcon(icon);
 
     //设置标题
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //创建按钮对象
-    MyPushButton *startbtn= new MyPushButton(":/Image/MenuSceneStartButton.jpg");
+    MyPushButton *startbtn= new MyPushButton(":/Image/MenuSceneStartButton.png");
     //指定按钮的爸爸
     startbtn->setParent(this);
     startbtn->setMysize(60,60);
@@ -71,13 +71,13 @@ void MainWindow::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
     QPixmap pix;
-    pix.load(":/Image/MenuSceneBg.jpg");
+    pix.load(":/Image/MenuSceneBg.png");
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
 
     //放上标题
     pix.load(":/Image/Title.png");
-    pix=pix.scaled(pix.width()*0.5,pix.height()*0.5);
-    painter.drawPixmap(10,30,pix);
+    pix=pix.scaled(pix.width()*0.1,pix.height()*0.1);
+    painter.drawPixmap(10,15,pix);
 
 
 }

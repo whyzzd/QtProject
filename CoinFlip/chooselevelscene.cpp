@@ -13,7 +13,7 @@ ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
     setFixedSize(320,600);
 
     //设置图标
-    this->setWindowIcon(QPixmap(":/Image/Coin0001.ico"));
+    this->setWindowIcon(QPixmap(":/Image/CoinIco.png"));
 
     //设置标题
     this->setWindowTitle("选择关卡场景");
@@ -30,7 +30,7 @@ ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
     });
 
     //返回按钮设置
-    MyPushButton *mybtn=new MyPushButton(":/Image/BackButton.jpg",":/Image/BackButtonSelected.jpg");
+    MyPushButton *mybtn=new MyPushButton(":/Image/BackButton.png",":/Image/BackButtonSelected.png");
     mybtn->setParent(this);
     mybtn->setMysize(50,50);
     mybtn->move(this->width()-65,this->height()-65);
@@ -44,7 +44,7 @@ ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
     //创建关卡按钮
     for(int i=0;i<20;i++)
     {
-        MyPushButton *mybtn=new MyPushButton(":/Image/LevelIcon.jpg");
+        MyPushButton *mybtn=new MyPushButton(":/Image/LevelIcon.png");
         mybtn->setParent(this);
         mybtn->setMysize(40,40);
         mybtn->move(35+i%4*70,130+i/4*70);
@@ -91,13 +91,13 @@ void ChooseLevelScene::paintEvent(QPaintEvent *)
 
     QPainter painter(this);
     //画背景图片
-    QPixmap pix(":/Image/OtherSceneBg.jpg");//也可以后面再加载对象
+    QPixmap pix(":/Image/OtherSceneBg.png");//也可以后面再加载对象
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
 
     //画标题图片
     pix.load(":/Image/Title.png");
-    pix=pix.scaled(pix.width()*0.5,pix.height()*0.5);
-    painter.drawPixmap((this->width()-pix.width())*0.5,30,pix.width(),pix.height(),pix);
+    pix=pix.scaled(pix.width()*0.3,pix.height()*0.3);
+    painter.drawPixmap((this->width()-pix.width())*0.5,-70,pix.width(),pix.height(),pix);
 
 }
 

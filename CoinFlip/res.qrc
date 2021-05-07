@@ -1,26 +1,26 @@
 <RCC>
     <qresource prefix="/">
-        <file>Image/BackButton.jpg</file>
-        <file>Image/BackButtonSelected.jpg</file>
         <file>Image/BoardNode.jpg</file>
         <file>Image/LevelCompletedDialogBg.jpg</file>
-        <file>Image/LevelIcon.jpg</file>
-        <file>Image/MenuSceneBg.jpg</file>
-        <file>Image/MenuSceneStartButton.jpg</file>
-        <file>Image/OtherSceneBg.jpg</file>
-        <file>Image/PlayLevelScene.jpg</file>
         <file>Image/Title.png</file>
-        <file>Image/Coin0001.ico</file>
-        <file>Image/Coin0001.jpg</file>
-        <file>Image/Coin0002.jpg</file>
-        <file>Image/Coin0003.jpg</file>
-        <file>Image/Coin0004.jpg</file>
-        <file>Image/Coin0005.jpg</file>
-        <file>Image/Coin0006.jpg</file>
-        <file>Image/Coin0007.jpg</file>
-        <file>Image/Coin0008.jpg</file>
         <file>Sound/ButtonClick.wav</file>
         <file>Sound/shuidi.mp3</file>
         <file>Sound/ButtonClick.mp3</file>
+        <file>Image/BackButton.png</file>
+        <file>Image/BackButtonSelected.png</file>
+        <file>Image/MenuSceneStartButton.png</file>
+        <file>Image/Coin0001.png</file>
+        <file>Image/Coin0002.png</file>
+        <file>Image/Coin0003.png</file>
+        <file>Image/Coin0004.png</file>
+        <file>Image/Coin0005.png</file>
+        <file>Image/Coin0006.png</file>
+        <file>Image/Coin0007.png</file>
+        <file>Image/Coin0008.png</file>
+        <file>Image/CoinIco.png</file>
+        <file>Image/LevelIcon.png</file>
+        <file>Image/MenuSceneBg.png</file>
+        <file>Image/OtherSceneBg.png</file>
+        <file>Image/PlayLevelScene.png</file>
     </qresource>
 </RCC>
