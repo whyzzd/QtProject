@@ -21,21 +21,21 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
-    connect(ui->action_New,&QAction::triggered,this,&doProcessTriggeredByNew);
-    connect(ui->action_Open,&QAction::triggered,this,&doProcessTriggeredByOpen);
-    connect(ui->action_UTF_8,&QAction::triggered,this,&doProcessTriggeredByUTF_8);
-    connect(ui->action_GB2312,&QAction::triggered,this,&doProcessTriggeredByGB2312);
-    connect(ui->action_Exit,&QAction::triggered,this,&doProcessTriggerByExit);
-    connect(ui->action_Save,&QAction::triggered,this,&doProcessTriggerBySave);
-    connect(ui->action_SaveAs,&QAction::triggered,this,&doProcessTriggerBySaveAs);
-    connect(ui->action_Close,&QAction::triggered,this,&doProcessTriggerByClose);
-    connect(ui->action_CloseAll,&QAction::triggered,this,&doProcessTriggerByCloseAll);
-    connect(ui->action_Tile,&QAction::triggered,this,&doProcessTriggerByTile);
-    connect(ui->action_Cascade,&QAction::triggered,this,&doProcessTriggerByCascade);
-    connect(ui->action_Next,&QAction::triggered,this,&doProcessTriggerByNext);
-    connect(ui->action_Previous,&QAction::triggered,this,&doProcessTriggerByPrevious);
-    connect(ui->action_About,&QAction::triggered,this,&doProcessTriggerByAbout);
-    connect(ui->action_AboutQT,&QAction::triggered,this,&doProcessTriggerByAboutQt);
+    connect(ui->action_New,&QAction::triggered,this,&MainWindow::doProcessTriggeredByNew);
+    connect(ui->action_Open,&QAction::triggered,this,&MainWindow::doProcessTriggeredByOpen);
+    connect(ui->action_UTF_8,&QAction::triggered,this,&MainWindow::doProcessTriggeredByUTF_8);
+    connect(ui->action_GB2312,&QAction::triggered,this,&MainWindow::doProcessTriggeredByGB2312);
+    connect(ui->action_Exit,&QAction::triggered,this,&MainWindow::doProcessTriggerByExit);
+    connect(ui->action_Save,&QAction::triggered,this,&MainWindow::doProcessTriggerBySave);
+    connect(ui->action_SaveAs,&QAction::triggered,this,&MainWindow::doProcessTriggerBySaveAs);
+    connect(ui->action_Close,&QAction::triggered,this,&MainWindow::doProcessTriggerByClose);
+    connect(ui->action_CloseAll,&QAction::triggered,this,&MainWindow::doProcessTriggerByCloseAll);
+    connect(ui->action_Tile,&QAction::triggered,this,&MainWindow::doProcessTriggerByTile);
+    connect(ui->action_Cascade,&QAction::triggered,this,&MainWindow::doProcessTriggerByCascade);
+    connect(ui->action_Next,&QAction::triggered,this,&MainWindow::doProcessTriggerByNext);
+    connect(ui->action_Previous,&QAction::triggered,this,&MainWindow::doProcessTriggerByPrevious);
+    connect(ui->action_About,&QAction::triggered,this,&MainWindow::doProcessTriggerByAbout);
+    connect(ui->action_AboutQT,&QAction::triggered,this,&MainWindow::doProcessTriggerByAboutQt);
 
 
 

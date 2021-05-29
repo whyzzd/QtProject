@@ -21,7 +21,7 @@ void SubText::NewFile()
     this->setWindowTitle(str);
     a++;
 
-    connect(this->document(),&QTextDocument::contentsChanged,this,&doProcessContentsChanged);
+    connect(this->document(),&QTextDocument::contentsChanged,this,&SubText::doProcessContentsChanged);
 
     qDebug()<<"三："<<nEdit;
 }
@@ -55,7 +55,7 @@ void SubText::OpenFile()
        this->append(str);
     }
     myfile->close();
-    connect(this->document(),&QTextDocument::contentsChanged,this,&doProcessContentsChanged);
+    connect(this->document(),&QTextDocument::contentsChanged,this,&SubText::doProcessContentsChanged);
 }
 
 void SubText::setMyCode(const QString code)
@@ -180,4 +180,11 @@ void SubText::closeEvent(QCloseEvent *e)
     {
         e->accept();
     }
+}
+void SubText::contextMenuEvent(QContextMenuEvent *e)
+{
+    //撤销，恢复，剪切，复制，粘贴，清除，全选
+    QMenu *menu = new QMenu(this);
+    menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"");
+    menu->exec(e->globalPos());
 }

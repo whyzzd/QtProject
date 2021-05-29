@@ -4,6 +4,7 @@
 #include <QWidget>
 #include<QTextEdit>
 #include<QFile>
+#include<QMenu>
 class SubText : public QTextEdit
 {
     Q_OBJECT
@@ -27,6 +28,7 @@ public:
     int n;
 
     void closeEvent(QCloseEvent *e);
+    void contextMenuEvent(QContextMenuEvent *e) ;
 
 signals:
 private slots:
