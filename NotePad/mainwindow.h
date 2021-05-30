@@ -35,6 +35,12 @@ private slots:
     void doProcessTriggerByAbout(bool);
     void doProcessTriggerByAboutQt(bool);
 
+    void doProcessTriggerByRedo(bool);
+    void doProcessTriggerByUndo(bool);
+    void doProcessTriggerByCut(bool);
+    void doProcessTriggerByCopy(bool);
+    void doProcessTriggerByParse(bool);
+
 private:
     Ui::MainWindow *ui;
     QString codeName;

@@ -12,6 +12,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->codeName="UTF-8";
     init();
+    //ui->action_Redo->setEnabled(false);
+    //编辑栏是否可用(是否变灰)，问题在于如何使得当前活跃的窗口能狗对应编辑栏的状态
+    //ui->action_Redo->setEnabled(ui->mdiArea->activeSubWindow()->);
+//    ui->action_Undo->setEnabled(ui->mdiArea->activeSubWindow()->document()->isUndoAvailable());
+//    ui->action_Cut->setEnabled(textCursor().hasSelection());
+//    ui->action_Copy->setEnabled(textCursor().hasSelection());
+//    ui->action_Parse->setEnabled(QApplication::clipboard()!=nullptr);
+
 }
 
 MainWindow::~MainWindow()
@@ -36,7 +44,12 @@ void MainWindow::init()
     connect(ui->action_Previous,&QAction::triggered,this,&MainWindow::doProcessTriggerByPrevious);
     connect(ui->action_About,&QAction::triggered,this,&MainWindow::doProcessTriggerByAbout);
     connect(ui->action_AboutQT,&QAction::triggered,this,&MainWindow::doProcessTriggerByAboutQt);
-
+    //以下功能未实现
+    connect(ui->action_Redo,&QAction::triggered,this,&MainWindow::doProcessTriggerByRedo);
+    connect(ui->action_Undo,&QAction::triggered,this,&MainWindow::doProcessTriggerByUndo);
+    connect(ui->action_Cut,&QAction::triggered,this,&MainWindow::doProcessTriggerByCut);
+    connect(ui->action_Copy,&QAction::triggered,this,&MainWindow::doProcessTriggerByCopy);
+    connect(ui->action_Parse,&QAction::triggered,this,&MainWindow::doProcessTriggerByParse);
 
 
 }
@@ -65,6 +78,7 @@ void MainWindow::doProcessTriggeredByNew(bool)
 
     ui->mdiArea->addSubWindow(newText);
     newText->show();
+
 }
 
 void MainWindow::doProcessTriggeredByOpen(bool)
@@ -154,4 +168,24 @@ void MainWindow::doProcessTriggerByAbout(bool)
 void MainWindow::doProcessTriggerByAboutQt(bool)
 {
     QMessageBox::aboutQt(this);
+}
+void MainWindow::doProcessTriggerByRedo(bool)
+{
+
+}
+void MainWindow::doProcessTriggerByUndo(bool)
+{
+
+}
+void MainWindow::doProcessTriggerByCut(bool)
+{
+
+}
+void MainWindow::doProcessTriggerByCopy(bool)
+{
+
+}
+void MainWindow::doProcessTriggerByParse(bool)
+{
+
 }
