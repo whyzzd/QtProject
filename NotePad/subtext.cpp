@@ -5,6 +5,7 @@
 #include<QDebug>
 #include<QCloseEvent>
 #include<QApplication>
+
 bool SubText::hasEdit=false;
 int SubText::nEdit=0;
 SubText::SubText(QWidget *parent) : QTextEdit(parent)

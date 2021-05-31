@@ -20,6 +20,14 @@ MainWindow::MainWindow(QWidget *parent)
 //    ui->action_Copy->setEnabled(textCursor().hasSelection());
 //    ui->action_Parse->setEnabled(QApplication::clipboard()!=nullptr);
 
+//    QMdiSubWindow*mdi = ui->mdiArea->activeSubWindow();
+//    QWidget *wid =mdi->widget();
+//    SubText *text=static_cast<SubText *>(wid);
+//    ui->action_Redo->setEnabled(text->document()->isRedoAvailable());
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -44,12 +52,13 @@ void MainWindow::init()
     connect(ui->action_Previous,&QAction::triggered,this,&MainWindow::doProcessTriggerByPrevious);
     connect(ui->action_About,&QAction::triggered,this,&MainWindow::doProcessTriggerByAbout);
     connect(ui->action_AboutQT,&QAction::triggered,this,&MainWindow::doProcessTriggerByAboutQt);
-    //以下功能未实现
-    connect(ui->action_Redo,&QAction::triggered,this,&MainWindow::doProcessTriggerByRedo);
+
+    connect(ui->action_Redo,&QAction::triggered,this,MainWindow::doProcessTriggerByRedo);
     connect(ui->action_Undo,&QAction::triggered,this,&MainWindow::doProcessTriggerByUndo);
     connect(ui->action_Cut,&QAction::triggered,this,&MainWindow::doProcessTriggerByCut);
     connect(ui->action_Copy,&QAction::triggered,this,&MainWindow::doProcessTriggerByCopy);
     connect(ui->action_Parse,&QAction::triggered,this,&MainWindow::doProcessTriggerByParse);
+
 
 
 }
@@ -107,7 +116,7 @@ void MainWindow::doProcessTriggeredByGB2312(bool)
 }
 void MainWindow::doProcessTriggerByExit(bool)
 {
-    //问题：如何使得在关闭子窗口后，主窗口还能不关闭
+    //问题：如何使得在关闭子窗口后，主窗口还能不关闭（已解决）
     //ui->mdiArea->closeAllSubWindows();
 
         this->close();
@@ -171,21 +180,36 @@ void MainWindow::doProcessTriggerByAboutQt(bool)
 }
 void MainWindow::doProcessTriggerByRedo(bool)
 {
+    QWidget *wid =ui->mdiArea->activeSubWindow()->widget();
+    SubText *text=static_cast<SubText *>(wid);
+
+    text->redo();
+
 
 }
 void MainWindow::doProcessTriggerByUndo(bool)
 {
+    QWidget *wid = ui->mdiArea->activeSubWindow()->widget();
+    SubText *text= (SubText*)wid;
+    text->undo();
 
 }
 void MainWindow::doProcessTriggerByCut(bool)
 {
+    QWidget *wid = ui->mdiArea->activeSubWindow()->widget();
+    SubText *text= (SubText*)wid;
+    text->cut();
 
 }
 void MainWindow::doProcessTriggerByCopy(bool)
 {
-
+    QWidget *wid = ui->mdiArea->activeSubWindow()->widget();
+    SubText *text= (SubText*)wid;
+    text->copy();
 }
 void MainWindow::doProcessTriggerByParse(bool)
 {
-
+    QWidget *wid = ui->mdiArea->activeSubWindow()->widget();
+    SubText *text= (SubText*)wid;
+    text->paste();
 }
