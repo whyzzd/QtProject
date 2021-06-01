@@ -30,6 +30,9 @@ public:
     void closeEvent(QCloseEvent *e);
     void contextMenuEvent(QContextMenuEvent *e) ;
 
+
+
+
 signals:
 private slots:
     void doProcessContentsChanged();

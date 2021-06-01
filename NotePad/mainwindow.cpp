@@ -72,7 +72,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
     else
     {
         ui->mdiArea->closeAllSubWindows();
-        event->ignore();
+        //此句话的作用是：如果存在未保存的文件，直接点击窗体进行关闭时，当文本被关闭时窗体是否会被关闭
+        //event->ignore();
 
     }
 
