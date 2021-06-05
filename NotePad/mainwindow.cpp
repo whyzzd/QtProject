@@ -12,21 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->codeName="UTF-8";
     init();
-    //ui->action_Redo->setEnabled(false);
-    //编辑栏是否可用(是否变灰)，问题在于如何使得当前活跃的窗口能狗对应编辑栏的状态
-    //ui->action_Redo->setEnabled(ui->mdiArea->activeSubWindow()->);
-//    ui->action_Undo->setEnabled(ui->mdiArea->activeSubWindow()->document()->isUndoAvailable());
-//    ui->action_Cut->setEnabled(textCursor().hasSelection());
-//    ui->action_Copy->setEnabled(textCursor().hasSelection());
-//    ui->action_Parse->setEnabled(QApplication::clipboard()!=nullptr);
-
-//    QMdiSubWindow*mdi = ui->mdiArea->activeSubWindow();
-//    QWidget *wid =mdi->widget();
-//    SubText *text=static_cast<SubText *>(wid);
-//    ui->action_Redo->setEnabled(text->document()->isRedoAvailable());
-
-
-
 
 }
 
@@ -59,25 +44,37 @@ void MainWindow::init()
     connect(ui->action_Copy,&QAction::triggered,this,&MainWindow::doProcessTriggerByCopy);
     connect(ui->action_Parse,&QAction::triggered,this,&MainWindow::doProcessTriggerByParse);
 
+    //初始化编辑栏(置灰色)
+    ui->action_Cut->setEnabled(false);
+    ui->action_Copy->setEnabled(false);
+    ui->action_Redo->setEnabled(false);
+    ui->action_Undo->setEnabled(false);
+    ui->action_Parse->setEnabled(false);
 
-
+    //若无活跃窗口，则置灰所有编辑
+    connect(ui->mdiArea,&QMdiArea::subWindowActivated,this,[=](QMdiSubWindow *sub){
+        if(sub==nullptr)
+        {
+            ui->action_Cut->setEnabled(false);
+            ui->action_Copy->setEnabled(false);
+            ui->action_Redo->setEnabled(false);
+            ui->action_Undo->setEnabled(false);
+            ui->action_Parse->setEnabled(false);
+        }
+    });
 }
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     if(!SubText::hasEdit)
     {
         event->accept();
-
     }
     else
     {
         ui->mdiArea->closeAllSubWindows();
         //此句话的作用是：如果存在未保存的文件，直接点击窗体进行关闭时，当文本被关闭时窗体是否会被关闭
         //event->ignore();
-
     }
-
-
 }
 
 void MainWindow::doProcessTriggeredByNew(bool)
@@ -88,6 +85,27 @@ void MainWindow::doProcessTriggeredByNew(bool)
 
     ui->mdiArea->addSubWindow(newText);
     newText->show();
+    qDebug()<<ui->mdiArea->activeSubWindow();
+//#ifndef QT_NO_CLIPBOARD
+
+    ui->action_Cut->setEnabled(false);
+    ui->action_Copy->setEnabled(false);
+    ui->action_Redo->setEnabled(false);
+    ui->action_Undo->setEnabled(false);
+    ui->action_Parse->setEnabled(false);
+
+    if(ui->mdiArea->activeSubWindow()!=nullptr)
+    {
+    connect(newText,&SubText::copyAvailable,ui->action_Cut,&QAction::setEnabled);
+    connect(newText,&SubText::redoAvailable,ui->action_Redo,&QAction::setEnabled);
+    connect(newText,&SubText::undoAvailable,ui->action_Undo,&QAction::setEnabled);
+    connect(newText,&SubText::copyAvailable,ui->action_Copy,&QAction::setEnabled);
+    connect(ui->mdiArea,&QMdiArea::subWindowActivated,newText,[=](QMdiSubWindow *sub){
+        ui->action_Parse->setEnabled(QApplication::clipboard()!=nullptr&&sub!=nullptr);
+    });
+    qDebug()<<"222222222222222222";
+    }
+//#endif
 
 }
 

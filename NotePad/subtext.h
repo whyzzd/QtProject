@@ -5,6 +5,7 @@
 #include<QTextEdit>
 #include<QFile>
 #include<QMenu>
+#include<QMdiSubWindow>
 class SubText : public QTextEdit
 {
     Q_OBJECT
@@ -29,13 +30,16 @@ public:
 
     void closeEvent(QCloseEvent *e);
     void contextMenuEvent(QContextMenuEvent *e) ;
-
+public slots:
+    void dealpaste(QMdiSubWindow *);
 
 
 
 signals:
 private slots:
     void doProcessContentsChanged();
+    //处理粘贴事件
+
 
 private:
     QString fileName;

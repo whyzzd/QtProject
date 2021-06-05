@@ -145,6 +145,18 @@ void SubText::doProcessContentsChanged()
     this->setWindowModified(this->isEdit);
 }
 
+void SubText::dealpaste(QMdiSubWindow *sub)
+{
+    if(sub!=nullptr)
+    {
+        qDebug()<<"有活跃窗口";
+    }
+    else
+    {
+         qDebug()<<"无活跃窗口";
+    }
+}
+
 void SubText::closeEvent(QCloseEvent *e)
 {
     if(this->isEdit)
