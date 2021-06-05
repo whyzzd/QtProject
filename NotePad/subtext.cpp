@@ -204,21 +204,21 @@ void SubText::contextMenuEvent(QContextMenuEvent *e)
 {
     //撤销，恢复，剪切，复制，粘贴，清除，全选
     QMenu *menu = new QMenu(this);
-    QAction *_redo= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"撤销",this,&redo,QKeySequence::Redo);
+    QAction *_redo= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"撤销",this,&QTextEdit::redo,QKeySequence::Redo);
     _redo->setEnabled(this->document()->isRedoAvailable());
-    QAction *_undo= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"恢复",this,undo,QKeySequence::Undo);
+    QAction *_undo= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"恢复",this,&QTextEdit::undo,QKeySequence::Undo);
     _undo->setEnabled(this->document()->isUndoAvailable());
     menu->addSeparator();
-    QAction *_cut=menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"剪切",this,&cut,QKeySequence::Cut);
+    QAction *_cut=menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"剪切",this,&QTextEdit::cut,QKeySequence::Cut);
     _cut->setEnabled(textCursor().hasSelection());
-    QAction *_copy= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"复制",this,&copy,QKeySequence::Copy);
+    QAction *_copy= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"复制",this,&QTextEdit::copy,QKeySequence::Copy);
     _copy->setEnabled(textCursor().hasSelection());
-    QAction *_paste=menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"粘贴",this,&paste,QKeySequence::Paste);
+    QAction *_paste=menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"粘贴",this,&QTextEdit::paste,QKeySequence::Paste);
     _paste->setEnabled(QApplication::clipboard()!=nullptr);
-    QAction *_clear = menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"清除",this,&clear,tr(""));
+    QAction *_clear = menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"清除",this,&QTextEdit::clear,tr(""));
     _clear->setEnabled(!this->document()->isEmpty());
     menu->addSeparator();
-    QAction *_selectAll = menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"全选",this,&selectAll,QKeySequence::SelectAll);
+    QAction *_selectAll = menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"全选",this,&QTextEdit::selectAll,QKeySequence::SelectAll);
     _selectAll->setEnabled(!this->document()->isEmpty());
     menu->exec(e->globalPos());
 }

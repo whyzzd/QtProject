@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->codeName="UTF-8";
     init();
 
+
 }
 
 MainWindow::~MainWindow()
@@ -22,6 +23,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
+    //将视图变为tab显示
+    ui->mdiArea->setViewMode(QMdiArea::TabbedView);
+    //是否有关闭按钮
+    ui->mdiArea->setTabsClosable(true);
+
+    //选项卡的形状
+    //ui->mdiArea->setTabShape(1)
     connect(ui->action_New,&QAction::triggered,this,&MainWindow::doProcessTriggeredByNew);
     connect(ui->action_Open,&QAction::triggered,this,&MainWindow::doProcessTriggeredByOpen);
     connect(ui->action_UTF_8,&QAction::triggered,this,&MainWindow::doProcessTriggeredByUTF_8);
@@ -38,7 +46,7 @@ void MainWindow::init()
     connect(ui->action_About,&QAction::triggered,this,&MainWindow::doProcessTriggerByAbout);
     connect(ui->action_AboutQT,&QAction::triggered,this,&MainWindow::doProcessTriggerByAboutQt);
 
-    connect(ui->action_Redo,&QAction::triggered,this,MainWindow::doProcessTriggerByRedo);
+    connect(ui->action_Redo,&QAction::triggered,this,&MainWindow::doProcessTriggerByRedo);
     connect(ui->action_Undo,&QAction::triggered,this,&MainWindow::doProcessTriggerByUndo);
     connect(ui->action_Cut,&QAction::triggered,this,&MainWindow::doProcessTriggerByCut);
     connect(ui->action_Copy,&QAction::triggered,this,&MainWindow::doProcessTriggerByCopy);
