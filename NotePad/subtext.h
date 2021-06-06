@@ -2,11 +2,12 @@
 #define SUBTEXT_H
 
 #include <QWidget>
-#include<QTextEdit>
+#include<QPlainTextEdit>
 #include<QFile>
 #include<QMenu>
 #include<QMdiSubWindow>
-class SubText : public QTextEdit
+
+class SubText : public QPlainTextEdit
 {
     Q_OBJECT
 public:

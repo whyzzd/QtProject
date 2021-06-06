@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->codeName="UTF-8";
     init();
 
+    //添加行号功能行高亮功能
+
 
 }
 
@@ -25,11 +27,15 @@ void MainWindow::init()
 {
     //将视图变为tab显示
     ui->mdiArea->setViewMode(QMdiArea::TabbedView);
+    //ui->mdiArea->ta
+
     //是否有关闭按钮
     ui->mdiArea->setTabsClosable(true);
 
-    //选项卡的形状
-    //ui->mdiArea->setTabShape(1)
+
+    //设置tab的形状
+    //ui->mdiArea->setTabShape(QTabWidget::Triangular);
+
     connect(ui->action_New,&QAction::triggered,this,&MainWindow::doProcessTriggeredByNew);
     connect(ui->action_Open,&QAction::triggered,this,&MainWindow::doProcessTriggeredByOpen);
     connect(ui->action_UTF_8,&QAction::triggered,this,&MainWindow::doProcessTriggeredByUTF_8);
