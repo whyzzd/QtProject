@@ -12,10 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->codeName="UTF-8";
     init();
-
     //添加行号功能行高亮功能
-
-
 }
 
 MainWindow::~MainWindow()
