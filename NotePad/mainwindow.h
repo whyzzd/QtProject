@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include<QLabel>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -44,5 +44,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QString codeName;
+
+    QLabel *m_CodeName;
 };
 #endif // MAINWINDOW_H

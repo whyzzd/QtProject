@@ -222,6 +222,7 @@ void SubText::dealpaste(QMdiSubWindow *sub)
 
 void SubText::closeEvent(QCloseEvent *e)
 {
+
     if(this->isEdit)
     {
         QMessageBox::StandardButton ret= QMessageBox::information(this,"关闭","你想将更改保存"+this->fileName+"吗？",

@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent)
     //一开始就调用一次新窗口
     doProcessTriggeredByNew(false);
 
+    m_CodeName=new QLabel("字符编码:"+codeName,ui->statusbar);
+    ui->statusbar->addWidget(m_CodeName);
 
 }
 
