@@ -1,20 +1,27 @@
 #include<QtWidgets>
-#include "subtext.h"
 #include<QFileDialog>
 #include<QMessageBox>
 #include<QTextStream>
 #include<QDebug>
 #include<QCloseEvent>
 #include<QApplication>
+#include "subtext.h"
 
+//静态变量
 bool SubText::hasEdit=false;
 int SubText::nEdit=0;
+int SubText::number=1;
+QVector<bool> SubText::v;
+
 SubText::SubText(QWidget *parent) : QPlainTextEdit(parent)
 {
+    nonameN=0;
     myfile=new QFile(this);
-    fileIsOpen=true;
+    fileIsTrOper=true;
     isEdit=false;
     n=1;
+
+
     //---------------------^-----------------------
     lineNumberArea = new LineNumberArea(this);
 
@@ -25,14 +32,50 @@ SubText::SubText(QWidget *parent) : QPlainTextEdit(parent)
     updateLineNumberAreaWidth(0);
     highlightCurrentLine();
     //---------------------v------------------------
-
 }
+
+
 void SubText::NewFile()
 {
-    static int a=1;
-    QString str = QString("未命名的文档[%1][*]").arg(a);
+
+    QString str;
+    if(number==1)
+    {
+        str = QString("未命名的文档[%1][*]").arg(number);
+        v.push_back(true);
+        nonameN=number;
+        number++;
+
+
+    }
+    else if(number>1)
+    {
+        //QVector::iterator
+        auto   ret= std::find(v.begin(),v.end(),false);
+        if(ret==v.end())
+        {
+
+            str = QString("未命名的文档[%1][*]").arg(number);
+            v.push_back(true);
+            nonameN=number;
+            number++;
+
+        }
+        else
+        {
+            int dist;
+            *ret=true;
+            dist=std::distance(v.begin(),ret);
+            str = QString("未命名的文档[%1][*]").arg(dist+1);
+            nonameN=dist+1;
+        }
+
+    }
+
+
     this->setWindowTitle(str);
-    a++;
+
+
 
     //connect(this->document(),&QTextDocument::contentsChanged,this,&SubText::doProcessContentsChanged);
     connect(this->document(),&QTextDocument::contentsChanged,this,[=](){
@@ -48,7 +91,7 @@ void SubText::OpenFile()
     QString filename=QFileDialog::getOpenFileName(this,"获取文件",".","Text(*.cpp *.h *.txt)");
     if(filename.isEmpty())
     {
-        fileIsOpen=false;
+        fileIsTrOper=false;
         return;
     }
     this->fileName=filename;
@@ -90,7 +133,7 @@ void SubText::SaveFile()
         QString filename=QFileDialog::getSaveFileName(this,"保存",".","Text(*.txt *.cpp *.h)");
         if(filename.isEmpty())
         {
-            this->fileIsOpen=false;
+            this->fileIsTrOper=false;
             return;
         }
         this->fileName=filename;
@@ -101,7 +144,7 @@ void SubText::SaveFile()
     if(!ret)
     {
         QMessageBox::warning(this,"警告","文件打开失败");
-        this->fileIsOpen=false;
+        this->fileIsTrOper=false;
         myfile->close();
         return;
     }
@@ -125,8 +168,15 @@ void SubText::SaveFile()
 
     QMessageBox::information(this,"保存","文件保存成功！");
 
-    this->fileIsOpen=true;
+    this->fileIsTrOper=true;
     qDebug()<<"三："<<nEdit;
+
+    //实现按顺序新增未命名编号
+    if(nonameN>=1&&nonameN<=v.size())
+    {
+        v[nonameN-1]=false;
+        nonameN=0;
+    }
 }
 
 void SubText::SaveFileAs()
@@ -180,7 +230,8 @@ void SubText::closeEvent(QCloseEvent *e)
         if(ret==QMessageBox::Yes)
         {
             this->SaveFile();
-            if(this->fileIsOpen)
+            //此处的含义为：只有上面的save保存成功，下面的关闭才会被执行
+            if(this->fileIsTrOper)
             {
                //注意：accept执行结束之后此事件函数并不会直接退出
                e->accept();
@@ -190,6 +241,13 @@ void SubText::closeEvent(QCloseEvent *e)
         }
         else if(ret==QMessageBox::No)
         {
+            //实现按顺序新增未命名编号
+            if(nonameN>=1&&nonameN<=v.size())
+            {
+                v[nonameN-1]=false;
+                nonameN=0;
+            }
+
             //关闭一个带“*”的文件和保存一样，编辑状态都需要改变
             if(nEdit>0)
             {
@@ -210,6 +268,12 @@ void SubText::closeEvent(QCloseEvent *e)
     }
     else
     {
+        //实现按顺序新增未命名编号
+        if(nonameN>=1&&nonameN<=v.size())
+        {
+            v[nonameN-1]=false;
+            nonameN=0;
+        }
         e->accept();
     }
 }
@@ -298,7 +362,7 @@ void SubText::highlightCurrentLine()
     if (!isReadOnly()) {
         QTextEdit::ExtraSelection selection;
 
-        QColor lineColor = QColor(Qt::yellow).lighter(160);
+        QColor lineColor = QColor(136,128,204).lighter(160);
 
         selection.format.setBackground(lineColor);
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);

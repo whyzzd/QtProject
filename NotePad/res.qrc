@@ -1,5 +1,14 @@
 <RCC>
-    <qresource prefix="/new/prefix1">
-        <file>Images1/MenuSceneStartButton.png</file>
+    <qresource prefix="/">
+        <file>ICON/close.bmp</file>
+        <file>ICON/closeAll.bmp</file>
+        <file>ICON/cut.bmp</file>
+        <file>ICON/newfile.bmp</file>
+        <file>ICON/openfile.bmp</file>
+        <file>ICON/redo.bmp</file>
+        <file>ICON/save.bmp</file>
+        <file>ICON/undo.bmp</file>
+        <file>ICON/copy.bmp</file>
+        <file>ICON/paste.bmp</file>
     </qresource>
 </RCC>

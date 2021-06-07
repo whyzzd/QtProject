@@ -5,14 +5,19 @@
 #include<QDebug>
 #include<QMessageBox>
 #include<QCloseEvent>
+#include<QGridLayout>//创建栅格布局
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     this->codeName="UTF-8";
+
     init();
-    //添加行号功能行高亮功能
+    //一开始就调用一次新窗口
+    doProcessTriggeredByNew(false);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -22,16 +27,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
+
+    this->setContentsMargins(0,0,0,0);
+    ui->centralwidget->setContentsMargins(0,0,0,0);
     //将视图变为tab显示
     ui->mdiArea->setViewMode(QMdiArea::TabbedView);
     //ui->mdiArea->ta
 
-    //是否有关闭按钮
+    //是否右上角是否有关闭按钮
     ui->mdiArea->setTabsClosable(true);
-
 
     //设置tab的形状
     //ui->mdiArea->setTabShape(QTabWidget::Triangular);
+
 
     connect(ui->action_New,&QAction::triggered,this,&MainWindow::doProcessTriggeredByNew);
     connect(ui->action_Open,&QAction::triggered,this,&MainWindow::doProcessTriggeredByOpen);
@@ -95,9 +103,12 @@ void MainWindow::doProcessTriggeredByNew(bool)
     newText->NewFile();
 
     ui->mdiArea->addSubWindow(newText);
-    newText->show();
+
+    //让窗口最大化显示
+    newText->showMaximized();
+
     qDebug()<<ui->mdiArea->activeSubWindow();
-//#ifndef QT_NO_CLIPBOARD
+
 
     ui->action_Cut->setEnabled(false);
     ui->action_Copy->setEnabled(false);
@@ -116,7 +127,7 @@ void MainWindow::doProcessTriggeredByNew(bool)
     });
     qDebug()<<"222222222222222222";
     }
-//#endif
+
 
 }
 
@@ -126,13 +137,14 @@ void MainWindow::doProcessTriggeredByOpen(bool)
     openText->setMyCode(this->codeName);
     openText->OpenFile();
     //如果打开文件失败那么就直接关掉
-    if(!openText->fileIsOpen)
+    if(!openText->fileIsTrOper)
     {
         openText->close();
         return;
     }
     ui->mdiArea->addSubWindow(openText);
     openText->show();
+
 }
 
 void MainWindow::doProcessTriggeredByUTF_8(bool)

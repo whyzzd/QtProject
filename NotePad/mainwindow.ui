@@ -6,19 +6,73 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>409</width>
-    <height>275</height>
+    <width>637</width>
+    <height>434</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item row="0" column="0">
      <widget class="QMdiArea" name="mdiArea">
-      <property name="styleSheet">
-       <string notr="true"/>
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>2</number>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      </property>
+      <property name="background">
+       <brush brushstyle="NoBrush">
+        <color alpha="255">
+         <red>160</red>
+         <green>160</green>
+         <blue>160</blue>
+        </color>
+       </brush>
+      </property>
+      <property name="viewMode">
+       <enum>QMdiArea::TabbedView</enum>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="tabsMovable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -29,7 +83,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>409</width>
+     <width>637</width>
      <height>23</height>
     </rect>
    </property>
@@ -99,22 +153,41 @@
    </attribute>
    <addaction name="action_New"/>
    <addaction name="separator"/>
+   <addaction name="action_Open"/>
+   <addaction name="action_Save"/>
+   <addaction name="action_Close"/>
+   <addaction name="action_CloseAll"/>
+   <addaction name="separator"/>
+   <addaction name="action_Cut"/>
+   <addaction name="action_Copy"/>
+   <addaction name="action_Parse"/>
+   <addaction name="separator"/>
+   <addaction name="action_Redo"/>
+   <addaction name="action_Undo"/>
   </widget>
   <action name="action_New">
    <property name="icon">
     <iconset resource="res.qrc">
-     <normaloff>:/new/prefix1/Images1/MenuSceneStartButton.png</normaloff>:/new/prefix1/Images1/MenuSceneStartButton.png</iconset>
+     <normaloff>:/ICON/newfile.bmp</normaloff>:/ICON/newfile.bmp</iconset>
    </property>
    <property name="text">
     <string>新建文件(&amp;N)</string>
    </property>
   </action>
   <action name="action_Open">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/openfile.bmp</normaloff>:/ICON/openfile.bmp</iconset>
+   </property>
    <property name="text">
     <string>打开文件(&amp;O)</string>
    </property>
   </action>
   <action name="action_Save">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/save.bmp</normaloff>:/ICON/save.bmp</iconset>
+   </property>
    <property name="text">
     <string>保存(&amp;S)</string>
    </property>
@@ -130,26 +203,46 @@
    </property>
   </action>
   <action name="action_Redo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/redo.bmp</normaloff>:/ICON/redo.bmp</iconset>
+   </property>
    <property name="text">
     <string>撤销(&amp;R)</string>
    </property>
   </action>
   <action name="action_Undo">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/undo.bmp</normaloff>:/ICON/undo.bmp</iconset>
+   </property>
    <property name="text">
     <string>恢复(&amp;U)</string>
    </property>
   </action>
   <action name="action_Cut">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/cut.bmp</normaloff>:/ICON/cut.bmp</iconset>
+   </property>
    <property name="text">
     <string>剪切(&amp;T)</string>
    </property>
   </action>
   <action name="action_Copy">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/copy.bmp</normaloff>:/ICON/copy.bmp</iconset>
+   </property>
    <property name="text">
     <string>复制(&amp;C)</string>
    </property>
   </action>
   <action name="action_Parse">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/paste.bmp</normaloff>:/ICON/paste.bmp</iconset>
+   </property>
    <property name="text">
     <string>粘贴(&amp;P)</string>
    </property>
@@ -165,11 +258,19 @@
    </property>
   </action>
   <action name="action_Close">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/close.bmp</normaloff>:/ICON/close.bmp</iconset>
+   </property>
    <property name="text">
     <string>关闭(&amp;0)</string>
    </property>
   </action>
   <action name="action_CloseAll">
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/ICON/closeAll.bmp</normaloff>:/ICON/closeAll.bmp</iconset>
+   </property>
    <property name="text">
     <string>关闭所有(&amp;A)</string>
    </property>

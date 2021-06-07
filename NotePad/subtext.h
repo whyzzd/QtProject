@@ -6,6 +6,7 @@
 #include<QFile>
 #include<QMenu>
 #include<QMdiSubWindow>
+#include<QVector>
 
 //-----------------------------
 QT_BEGIN_NAMESPACE
@@ -32,7 +33,7 @@ public:
     void SaveFileAs();
 
     //文件是否打开成功
-    bool fileIsOpen;
+    bool fileIsTrOper;
     //是否存在还在编辑的文件
     static bool hasEdit;
     //记录正在编辑的文件个数
@@ -58,6 +59,12 @@ private:
     QFile *myfile;
     QString codeName;
     bool isEdit;
+
+    int nonameN;
+
+    //实现按顺序新增未命名编号
+    static QVector<bool>v;
+    static int number;
 
 
 //----------------------^------------------------------
