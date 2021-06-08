@@ -43,6 +43,8 @@ public:
 
     void closeEvent(QCloseEvent *e);
     void contextMenuEvent(QContextMenuEvent *e) ;
+    //重写鼠标事件，当鼠标点击时触发光标位置改变
+    void mousePressEvent(QMouseEvent *e);
 
 
 public slots:

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include<QLabel>
+#include"subtext.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,8 +20,11 @@ public:
 
     void closeEvent(QCloseEvent *event);
 private slots:
+    void initNewAndOpen(SubText*);
     void doProcessTriggeredByNew(bool);
     void doProcessTriggeredByOpen(bool);
+
+
     void doProcessTriggeredByUTF_8(bool);
     void doProcessTriggeredByGB2312(bool);
     void doProcessTriggerByExit(bool);
@@ -41,10 +45,14 @@ private slots:
     void doProcessTriggerByCopy(bool);
     void doProcessTriggerByParse(bool);
 
+
+
 private:
     Ui::MainWindow *ui;
     QString codeName;
 
     QLabel *m_CodeName;
+    QLabel *m_CursorPositionLines;
+    QLabel *m_CursorPositionCol;
 };
 #endif // MAINWINDOW_H

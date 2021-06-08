@@ -1,24 +1,39 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include"subtext.h"
+
 #include<QMdiSubWindow>
 #include<QDebug>
 #include<QMessageBox>
 #include<QCloseEvent>
 #include<QGridLayout>//创建栅格布局
+#include<QTextBlock>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle("MyNotePad");
     this->codeName="UTF-8";
 
     init();
-    //一开始就调用一次新窗口
-    doProcessTriggeredByNew(false);
 
+    //状态栏显示
     m_CodeName=new QLabel("字符编码:"+codeName,ui->statusbar);
+    m_CodeName->setMinimumWidth(200);
     ui->statusbar->addWidget(m_CodeName);
+
+    m_CursorPositionCol =new QLabel("列:");
+    m_CursorPositionCol->setMinimumWidth(100);
+    ui->statusbar->addWidget(m_CursorPositionCol);
+
+    m_CursorPositionLines =new QLabel("行:");
+    m_CursorPositionLines->setMinimumWidth(100);
+    ui->statusbar->addWidget(m_CursorPositionLines );
+
+
+    ui->statusbar->setLayoutDirection(Qt::RightToLeft);
+
+
 
 }
 
@@ -97,7 +112,39 @@ void MainWindow::closeEvent(QCloseEvent *event)
         //event->ignore();
     }
 }
+void MainWindow::initNewAndOpen(SubText* sub)
+{
 
+//    if(ui->mdiArea->activeSubWindow()!=nullptr)
+//    {
+//        return;
+//    }
+    connect(sub,&SubText::copyAvailable,ui->action_Cut,&QAction::setEnabled);
+    connect(sub,&SubText::redoAvailable,ui->action_Redo,&QAction::setEnabled);
+    //撤销这一步多了一次发信号
+    connect(sub,&SubText::undoAvailable,ui->action_Undo,[=](bool ret){
+        ui->action_Undo->setEnabled(ret);
+    });
+    connect(sub,&SubText::copyAvailable,ui->action_Copy,&QAction::setEnabled);
+    connect(ui->mdiArea,&QMdiArea::subWindowActivated,sub,[=](QMdiSubWindow *sub){
+        ui->action_Parse->setEnabled(QApplication::clipboard()!=nullptr&&sub!=nullptr);
+    });
+
+
+
+    //在状态栏显示光标的位置
+    connect(sub,&SubText::cursorPositionChanged,this,[=](){
+        QTextCursor tc=sub->textCursor();
+        QTextLayout *pLayout=tc.block().layout();
+        //列
+        int col=tc.position()-tc.block().position();
+        //行
+        int lines=pLayout->lineForTextPosition(col).lineNumber()+tc.block().firstLineNumber();
+
+        m_CursorPositionCol->setText("列:"+QString::number(col));
+        m_CursorPositionLines->setText("行:"+QString::number(lines+1));
+    });
+}
 void MainWindow::doProcessTriggeredByNew(bool)
 {
     SubText *newText = new SubText(this);
@@ -111,25 +158,7 @@ void MainWindow::doProcessTriggeredByNew(bool)
 
     qDebug()<<ui->mdiArea->activeSubWindow();
 
-
-    ui->action_Cut->setEnabled(false);
-    ui->action_Copy->setEnabled(false);
-    ui->action_Redo->setEnabled(false);
-    ui->action_Undo->setEnabled(false);
-    ui->action_Parse->setEnabled(false);
-
-    if(ui->mdiArea->activeSubWindow()!=nullptr)
-    {
-    connect(newText,&SubText::copyAvailable,ui->action_Cut,&QAction::setEnabled);
-    connect(newText,&SubText::redoAvailable,ui->action_Redo,&QAction::setEnabled);
-    connect(newText,&SubText::undoAvailable,ui->action_Undo,&QAction::setEnabled);
-    connect(newText,&SubText::copyAvailable,ui->action_Copy,&QAction::setEnabled);
-    connect(ui->mdiArea,&QMdiArea::subWindowActivated,newText,[=](QMdiSubWindow *sub){
-        ui->action_Parse->setEnabled(QApplication::clipboard()!=nullptr&&sub!=nullptr);
-    });
-    qDebug()<<"222222222222222222";
-    }
-
+    initNewAndOpen(newText);
 
 }
 
@@ -144,19 +173,28 @@ void MainWindow::doProcessTriggeredByOpen(bool)
         openText->close();
         return;
     }
+qDebug()<<"djaskldajdlakjdas"<<openText->document()->isUndoAvailable();
     ui->mdiArea->addSubWindow(openText);
-    openText->show();
+    openText->showMaximized();
+
+    qDebug()<<"open:"<<ui->mdiArea->activeSubWindow();
+
+
+    initNewAndOpen(openText);
+
 
 }
 
 void MainWindow::doProcessTriggeredByUTF_8(bool)
 {
     this->codeName="UTF-8";
+    this->m_CodeName->setText("字符编码:"+this->codeName);
 }
 
 void MainWindow::doProcessTriggeredByGB2312(bool)
 {
     this->codeName="GB18030";
+    this->m_CodeName->setText("字符编码:"+this->codeName);
 }
 void MainWindow::doProcessTriggerByExit(bool)
 {
@@ -224,17 +262,30 @@ void MainWindow::doProcessTriggerByAboutQt(bool)
 }
 void MainWindow::doProcessTriggerByRedo(bool)
 {
-    QWidget *wid =ui->mdiArea->activeSubWindow()->widget();
+    //恢复
+    qDebug()<<"执行了redo";
+    QMdiSubWindow* sub= ui->mdiArea->activeSubWindow();
+    if(sub==nullptr)return;
+    QWidget *wid =sub->widget();
+    if(wid==nullptr)return;
     SubText *text=static_cast<SubText *>(wid);
-
+    if(text==nullptr)return;
     text->redo();
 
 
 }
 void MainWindow::doProcessTriggerByUndo(bool)
 {
-    QWidget *wid = ui->mdiArea->activeSubWindow()->widget();
+    //撤销
+
+    QMdiSubWindow* sub= ui->mdiArea->activeSubWindow();
+
+    if(sub==nullptr)return;
+    qDebug()<<"执行了undo";
+    QWidget *wid =sub->widget();
+    if(wid==nullptr)return;
     SubText *text= (SubText*)wid;
+    if(wid==nullptr)return;
     text->undo();
 
 }
@@ -257,3 +308,4 @@ void MainWindow::doProcessTriggerByParse(bool)
     SubText *text= (SubText*)wid;
     text->paste();
 }
+

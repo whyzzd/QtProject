@@ -2,6 +2,8 @@
 #include<QFileDialog>
 #include<QMessageBox>
 #include<QTextStream>
+#include<QDataStream>
+
 #include<QDebug>
 #include<QCloseEvent>
 #include<QApplication>
@@ -22,6 +24,8 @@ SubText::SubText(QWidget *parent) : QPlainTextEdit(parent)
     n=1;
 
 
+
+
     //---------------------^-----------------------
     lineNumberArea = new LineNumberArea(this);
 
@@ -37,7 +41,6 @@ SubText::SubText(QWidget *parent) : QPlainTextEdit(parent)
 
 void SubText::NewFile()
 {
-
     QString str;
     if(number==1)
     {
@@ -45,8 +48,6 @@ void SubText::NewFile()
         v.push_back(true);
         nonameN=number;
         number++;
-
-
     }
     else if(number>1)
     {
@@ -59,7 +60,6 @@ void SubText::NewFile()
             v.push_back(true);
             nonameN=number;
             number++;
-
         }
         else
         {
@@ -69,21 +69,14 @@ void SubText::NewFile()
             str = QString("未命名的文档[%1][*]").arg(dist+1);
             nonameN=dist+1;
         }
-
     }
-
-
     this->setWindowTitle(str);
-
-
-
     //connect(this->document(),&QTextDocument::contentsChanged,this,&SubText::doProcessContentsChanged);
     connect(this->document(),&QTextDocument::contentsChanged,this,[=](){
         doProcessContentsChanged();
     });
 
     qDebug()<<"三："<<nEdit;
-
 }
 
 void SubText::OpenFile()
@@ -105,19 +98,30 @@ void SubText::OpenFile()
         myfile->close();
         return;
     }
+
+
+
     QTextStream stream(myfile);
+
 
     stream.setCodec(this->codeName.toLocal8Bit().data());  //GB18030"UTF-8"
 
     while(!stream.atEnd())
     {
        QString str = stream.readLine();
+
        this->appendPlainText(str);
+
     }
+
+
     myfile->close();
     connect(this->document(),&QTextDocument::contentsChanged,this,[=](){
         doProcessContentsChanged();
+        emit this->undoAvailable(this->isUndoRedoEnabled());
     });
+    fileIsTrOper=true;
+
 
 }
 
@@ -282,10 +286,10 @@ void SubText::contextMenuEvent(QContextMenuEvent *e)
 {
     //撤销，恢复，剪切，复制，粘贴，清除，全选
     QMenu *menu = new QMenu(this);
-    QAction *_redo= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"撤销",this,&SubText::redo,QKeySequence::Redo);
-    _redo->setEnabled(this->document()->isRedoAvailable());
-    QAction *_undo= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"恢复",this,&SubText::undo,QKeySequence::Undo);
+    QAction *_undo= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"撤销",this,&SubText::undo,QKeySequence::Undo);
     _undo->setEnabled(this->document()->isUndoAvailable());
+    QAction *_redo= menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"恢复",this,&SubText::redo,QKeySequence::Redo);
+    _redo->setEnabled(this->document()->isRedoAvailable());
     menu->addSeparator();
     QAction *_cut=menu->addAction(QIcon(":/new/prefix1/Images1/MenuSceneStartButton.png"),"剪切",this,&SubText::cut,QKeySequence::Cut);
     _cut->setEnabled(textCursor().hasSelection());
@@ -300,6 +304,12 @@ void SubText::contextMenuEvent(QContextMenuEvent *e)
     _selectAll->setEnabled(!this->document()->isEmpty());
     menu->exec(e->globalPos());
 }
+void SubText::mousePressEvent(QMouseEvent *e)
+{
+    emit this->cursorPositionChanged();
+    mouseMoveEvent(e);
+}
+
 
 //-------------------^---------------------------------------------------------------
 int SubText::lineNumberAreaWidth()

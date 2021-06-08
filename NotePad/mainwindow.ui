@@ -84,7 +84,7 @@
      <x>0</x>
      <y>0</y>
      <width>637</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_F">
@@ -110,8 +110,8 @@
      <addaction name="action_UTF_8"/>
      <addaction name="action_GB2312"/>
     </widget>
-    <addaction name="action_Redo"/>
     <addaction name="action_Undo"/>
+    <addaction name="action_Redo"/>
     <addaction name="action_Cut"/>
     <addaction name="action_Copy"/>
     <addaction name="action_Parse"/>
@@ -165,8 +165,8 @@
    <addaction name="action_Copy"/>
    <addaction name="action_Parse"/>
    <addaction name="separator"/>
-   <addaction name="action_Redo"/>
    <addaction name="action_Undo"/>
+   <addaction name="action_Redo"/>
   </widget>
   <action name="action_New">
    <property name="icon">
@@ -205,22 +205,28 @@
     <string>退出(&amp;E)</string>
    </property>
   </action>
-  <action name="action_Redo">
+  <action name="action_Undo">
    <property name="icon">
     <iconset resource="res.qrc">
      <normaloff>:/ICON/redo.bmp</normaloff>:/ICON/redo.bmp</iconset>
    </property>
    <property name="text">
-    <string>撤销(&amp;R)</string>
+    <string>撤销(&amp;U)</string>
+   </property>
+   <property name="toolTip">
+    <string>撤销(U)</string>
    </property>
   </action>
-  <action name="action_Undo">
+  <action name="action_Redo">
    <property name="icon">
     <iconset resource="res.qrc">
      <normaloff>:/ICON/undo.bmp</normaloff>:/ICON/undo.bmp</iconset>
    </property>
    <property name="text">
-    <string>恢复(&amp;U)</string>
+    <string>恢复(&amp;R)</string>
+   </property>
+   <property name="toolTip">
+    <string>恢复(R)</string>
    </property>
   </action>
   <action name="action_Cut">
