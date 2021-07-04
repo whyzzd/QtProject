@@ -3,8 +3,9 @@
 #include<QPainter>
 #include<QDebug>
 #include<QTimer>
-#include<QSound>
-#include<QMediaPlayer>
+//#include<QSound>
+//#include<QMediaPlayer>
+//#include<QtMultimedia>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -27,8 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
         this->close();
     });
     //创建按钮音效
-    QSound *btnsnd=new QSound(":/Sound/ButtonClick.mp3",this);
-
+    //QSound *btnsnd=new QSound(":/Sound/ButtonClick.wav",this);
 
     //创建按钮对象
     MyPushButton *startbtn= new MyPushButton(":/Image/MenuSceneStartButton.png");
@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(startbtn,&QPushButton::clicked,[=](){
         //点击声
         //QApplication::beep();
-        btnsnd->play();
+        //btnsnd->play();
         //qDebug()<<"点击了开始按钮";
         //设置点击效果，
         //startbtn->zoom1();

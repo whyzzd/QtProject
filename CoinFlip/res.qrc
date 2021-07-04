@@ -3,9 +3,6 @@
         <file>Image/BoardNode.jpg</file>
         <file>Image/LevelCompletedDialogBg.jpg</file>
         <file>Image/Title.png</file>
-        <file>Sound/ButtonClick.wav</file>
-        <file>Sound/shuidi.mp3</file>
-        <file>Sound/ButtonClick.mp3</file>
         <file>Image/BackButton.png</file>
         <file>Image/BackButtonSelected.png</file>
         <file>Image/MenuSceneStartButton.png</file>

@@ -27,5 +27,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     res.qrc
-
-
+#这句话可以将三处位置的logo都替换成为根目录下的logo
+RC_ICONS = logo.ico
